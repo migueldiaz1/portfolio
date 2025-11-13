@@ -337,7 +337,7 @@
             flex-wrap: nowrap;
             /* Centrar si hay pocos libros */
             justify-content: center; 
-            gap: 20rem;
+            gap: 5rem;
             padding-bottom: 1rem;
             padding-top: 1rem;
             user-select: none;
@@ -382,9 +382,22 @@
             flex-shrink: 0;
             transition: transform 1.2s ease;
         }
-        .book-card:hover {
-            transform: scale(1.); /* Un leve zoom al pasar el ratón */
+        
+                /* --- ESTILO: LIBRO DE PUBLICACIÓN --- */
+        .book-card {
+            display: block;
+            width: 280px; /* Ancho del libro */
+            height: 380px; /* Alto del libro */
+            position: relative;
+            perspective: 1500px;
+            flex-shrink: 0;
+            
+            /* --- CAMBIO AQUÍ --- */
+            /* Transición más rápida para el efecto de foco */
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
+            z-index: 10;
         }
+        /* La regla .book-card:hover simple se ha eliminado */
 
         .book-cover, .book-paper {
             position: absolute;
@@ -410,6 +423,8 @@
             justify-content: center;
             align-items: center;
             text-align: center;
+            text-align: center;
+            transform-style: preserve-3d;
         }
         
         /* Lomo del libro */
@@ -426,6 +441,29 @@
             border-radius: 4px 0 0 4px;
             box-shadow: inset -2px 0 4px rgba(0,0,0,0.2);
         }
+
+        /* --- AÑADE ESTA REGLA NUEVA --- */
+    .book-cover::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        
+        /* Este es el color liso que tendrá la parte de atrás */
+        /* Puedes usar un color un poco más oscuro si quieres simular sombra */
+        background: var(--primary-navy); 
+        
+        /* Gira esta cara 180 grados y la empuja 1px para tapar el espejo */
+        transform: rotateY(180deg) translateZ(1px); 
+        
+        /* Oculta la parte trasera de esta nueva "cara trasera" */
+        backface-visibility: hidden;
+        
+        /* Asegura que tenga el mismo borde redondeado */
+        border-radius: 4px 8px 8px 4px;
+    }
         
         .book-cover .book-title {
             font-family: 'Playfair Display', serif;
@@ -482,6 +520,26 @@
             display: inline-block;
             margin-top: auto; /* Empuja el badge al fondo */
         }
+
+        /* --- AÑADIR ESTAS DOS REGLAS --- */
+
+        /* 1. Al pasar el ratón por el track, atenúa TODOS los libros */
+        .publication-carousel-track:hover > .book-card {
+            filter: blur(4px) grayscale(80%);
+            opacity: 0.5;
+            transform: scale(0.95); /* Encoge los libros inactivos */
+        }
+
+        /* 2. PERO, en el libro que SÍ tiene el hover, anula el efecto */
+        .publication-carousel-track:hover > .book-card:hover {
+            filter: none; /* <-- La clave está aquí */
+            opacity: 1;
+            transform: scale(1.5); /* Agranda el libro activo */
+            z-index: 20; /* Lo pone por delante */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+
 
         /* --- ANIMACIÓN DE APERTURA --- */
         .book-card:hover .book-cover {
