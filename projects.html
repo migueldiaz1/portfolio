@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Miguel Díaz Benito</title>
+    <meta name="description" content="Explore Miguel Díaz Benito's research projects in AI, medical imaging, and computer vision with publications and competition achievements.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    
+    <style>
+        :root {
+            --primary-navy: #1a2332;
+            --secondary-copper: #c17817;
+            --accent-sage: #7c9885;
+            --bg-light: #fafafa;
+            --text-dark: #2d3748;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background: rgba(26, 35, 50, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .fade-in {
+            opacity: 0;
+        }
+        
+        .filter-btn {
+            background: white;
+            color: var(--text-dark);
+            border: 2px solid #e2e8f0;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.25rem;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--secondary-copper);
+            color: white;
+            border-color: var(--secondary-copper);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(193, 120, 23, 0.3);
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+        
+        .achievement-badge {
+            background: linear-gradient(135deg, var(--secondary-copper), #d4941f);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin: 0.25rem;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            max-width: 4xl;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--secondary-copper);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            cursor: pointer;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-close:hover {
+            background: #a66614;
+        }
+        
+        .tag {
+            background: #e2e8f0;
+            color: var(--text-dark);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: inline-block;
+            margin: 0.125rem;
+        }
+        
+        .tag.medical-ai {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .tag.computer-vision {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .tag.deep-learning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .tag.publications {
+            background: #f3e8ff;
+            color: #7c3aed;
+        }
+        
+        .tag.software {
+            background: #e0f2fe;
+            color: #0c4a6e;
+        }
+        
+        .competition-result {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="text-white font-display font-semibold text-xl">
+                Miguel Díaz Benito
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="text-white hover:text-yellow-300 transition-colors">Home</a>
+                <a href="about.html" class="text-white hover:text-yellow-300 transition-colors">About</a>
+                <a href="#projects" class="text-white hover:text-yellow-300 transition-colors">Projects</a>
+                <a href="contact.html" class="text-white hover:text-yellow-300 transition-colors">Contact</a>
+            </div>
+            <button class="md:hidden text-white" onclick="toggleMobileMenu()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <section class="pt-24 pb-16 bg-gradient-to-br from-gray-50 to-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="fade-in">
+                    <h1 class="font-display text-5xl font-bold text-gray-800 mb-6">
+                        Research Projects
+                    </h1>
+                    <p class="text-xl text-gray-600 leading-relaxed mb-8">
+                        A curated selection of my key projects in medical imaging, computer vision, and software development,
+                        including publications at top-tier conferences and competition achievements.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-8 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-8 fade-in">
+                <div class="flex flex-wrap justify-center">
+                    <button class="filter-btn active" data-filter="all">All Projects</button>
+                    <button class="filter-btn" data-filter="medical-imaging">Medical Imaging</button>
+                    <button class="filter-btn" data-filter="cv-other">Computer Vision (Other)</button>
+                    <button class="filter-btn" data-filter="software">Software Development</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                
+                <div class="project-card fade-in" 
+                     data-categories="medical-imaging"
+                     data-title="MIRAGE: Retrieval and Generation of Multimodal Images and Texts for Medical Education"
+                     data-description="MIRAGE is an innovative system for medical education that combines AI-powered image retrieval and generation with educational content. The system can retrieve relevant medical images based on text queries and generate synthetic medical images with corresponding educational descriptions, enhancing the learning experience for medical students and professionals."
+                     data-methodology="The approach utilizes advanced multimodal AI techniques including CLIP-based image-text matching, generative adversarial networks (GANs) for synthetic image generation, and transformer architectures for text generation. The system employs contrastive learning to align visual and textual representations in a shared embedding space."
+                     data-results="Achieved Best Student Paper Award - Honorable Mention at MICCAI 2025. The system demonstrated superior performance in medical image retrieval tasks and generated high-quality synthetic medical images that were indistinguishable from real medical images in blind evaluations by medical professionals."
+                     data-conference="MICCAI 2025 - AMAI Workshop"
+                     data-achievement="Best Student Paper Award - Honorable Mention">
+                    <img src="resources/project-1.jpg" alt="MIRAGE Project" class="project-image">
+                    <div class="p-6">
+                        <div class="flex flex-wrap mb-3">
+                            <span class="tag medical-ai">Medical AI</span>
+                            <span class="tag publications">Publication</span>
+                            <span class="tag deep-learning">Deep Learning</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">
+                            MIRAGE: Multimodal Medical Education System
+                        </h3>
+                        <p class="text-gray-600 mb-4 text-sm">
+                            AI-powered system for medical education combining image retrieval and generation 
+                            with educational content enhancement.
+                        </p>
+                        <div class="achievement-badge">
+                            🏆 Best Student Paper - Honorable Mention
+                        </div>
+                        <div class="text-sm text-gray-500 mt-3">
+                            MICCAI 2025 • AMAI Workshop
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in"
+                     data-categories="medical-imaging"
+                     data-title="Deep Learning-Based Cross-Anatomy CT Synthesis Using Adapted nnResU-Net"
+                     data-description="Advanced deep learning solution for MRI-to-CT synthesis challenge, developing enhanced nnU-Net architectures with anatomical feature prioritized loss functions. The project addresses the critical need for synthetic CT generation from MRI scans for radiation therapy planning and surgical navigation."
+                     data-methodology="Developed an adapted nnResU-Net architecture with anatomical feature prioritized loss functions. Implemented advanced data preprocessing strategies, architectural modifications, and tailored loss functions that significantly improved performance across both MRI-to-sCT and CBCT-to-sCT synthesis tasks."
+                     data-results="Achieved 2nd place in both Task 1 (MRI-to-sCT) and Task 2 (CBCT-to-sCT) of the MICCAI SynthRAD 2025 challenge. The solution demonstrated superior performance metrics including peak signal-to-noise ratio (PSNR) and structural similarity index (SSIM) compared to baseline methods."
+                     data-conference="MICCAI 2025 - SASHIMI Workshop"
+                     data-achievement="2nd Place - SynthRAD Challenge (Both Tasks)">
+                    <img src="resources/project-2.jpg" alt="SynthRAD Challenge" class="project-image">
+                    <div class="p-6">
+                        <div class="flex flex-wrap mb-3">
+                            <span class="tag medical-ai">Medical AI</span>
+                            <span class="tag deep-learning">Deep Learning</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">
+                            SynthRAD Challenge - MRI-to-CT Synthesis
+                        </h3>
+                        <p class="text-gray-600 mb-4 text-sm">
+                            Advanced nnU-Net solution for cross-anatomy CT synthesis with anatomical 
+                            feature prioritized loss functions.
+                        </p>
+                        <div class="competition-result">
+                            🥈 2nd Place - Both Tasks
+                        </div>
+                        <div class="text-sm text-gray-500 mt-3">
+                            MICCAI 2025 • SASHIMI Workshop
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in"
+                     data-categories="cv-other"
+                     data-title="Data-Centric and Model-Centric Enhancements for Urban Object Re-Identification"
+                     data-description="Comprehensive approach to urban object re-identification combining advanced data augmentation techniques with architectural innovations. The project addresses the challenge of identifying objects across multiple camera views in urban environments, crucial for surveillance and smart city applications."
+                     data-methodology="Implemented Bag of Tricks baseline enhanced with architectural modifications, advanced data strategies including augmentation, super-resolution, and style transfer. Developed novel feature extraction and matching techniques optimized for urban object identification across varying conditions."
+                     data-results="Achieved 1st place on public leaderboard and 2nd place on private leaderboard in the ICIP 2025 Grand Challenge on Urban Object Re-Identification. Demonstrated robust performance across diverse urban scenarios and lighting conditions."
+                     data-conference="ICIP 2025 - Grand Challenge"
+                     data-achievement="1st Place (Public) • 2nd Place (Private)">
+                    <img src="resources/project-3.jpg" alt="Urban Re-ID" class="project-image">
+                    <div class="p-6">
+                        <div class="flex flex-wrap mb-3">
+                            <span class="tag computer-vision">Computer Vision</span>
+                            <span class="tag deep-learning">Deep Learning</span>
+                            <span class="tag publications">Publication</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">
+                            Urban Object Re-Identification Challenge
+                        </h3>
+                        <p class="text-gray-600 mb-4 text-sm">
+                            Advanced computer vision solution for urban object identification across 
+                            multiple camera views with superior performance.
+                        </p>
+                        <div class="competition-result">
+                            🥇 1st (Public) • 🥈 2nd (Private)
+                        </div>
+                        <div class="text-sm text-gray-500 mt-3">
+                            ICIP 2025 • Grand Challenge
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in"
+                     data-categories="medical-imaging"
+                     data-title="Detection and Segmentation of Brain Tumours with YOLOv8"
+                     data-description="Bachelor thesis project focusing on advanced brain tumor detection and segmentation using state-of-the-art YOLOv8 architecture. The project addresses the critical need for accurate and efficient brain tumor identification in medical imaging, contributing to early diagnosis and treatment planning."
+                     data-methodology="Implemented YOLOv8 architecture specifically optimized for medical imaging applications. Developed custom preprocessing pipelines, data augmentation strategies, and post-processing techniques tailored for brain MRI analysis. Integrated advanced segmentation masks and confidence scoring mechanisms."
+                     data-results="Achieved exceptional performance with 9.5/10 grade for bachelor thesis. The system demonstrated high accuracy in tumor detection and precise segmentation boundaries, validated on clinical MRI datasets with expert radiologist annotations."
+                     data-conference="Bachelor Thesis - Universidad Autónoma de Madrid"
+                     data-achievement="Thesis Grade: 9.5/10">
+                    <img src="resources/project-4.jpg" alt="Brain Tumor Detection" class="project-image">
+                    <div class="p-6">
+                        <div class="flex flex-wrap mb-3">
+                            <span class="tag medical-ai">Medical AI</span>
+                            <span class="tag deep-learning">Deep Learning</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">
+                            Brain Tumor Detection with YOLOv8
+                        </h3>
+                        <p class="text-gray-600 mb-4 text-sm">
+                            Advanced YOLOv8 implementation for precise brain tumor detection and 
+                            segmentation in medical MRI scans.
+                        </p>
+                        <div class="achievement-badge">
+                            📄 Thesis Grade: 9.5/10
+                        </div>
+                        <div class="text-sm text-gray-500 mt-3">
+                            Universidad Autónoma de Madrid • Bachelor Thesis
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in"
+                     data-categories="software"
+                     data-title="Pedalling Platform with Functional Electrical Stimulation"
+                     data-description="Research internship at Centro de Automática y Robótica (CAR-CSIC) contributing to the development and validation of a pedalling platform with functional electrical stimulation (FES) for patient rehabilitation. The project combines robotics, control systems, and biomedical engineering for therapeutic applications."
+                     data-methodology="Worked on algorithm integration using MATLAB and Python, preparation of technical documentation, validation of training therapies, and data analysis for system improvement. Contributed to software development, system validation protocols, and performance optimization strategies."
+                     data-results="Successfully contributed to the development of a functional pedalling platform with integrated FES capabilities. The system showed promising results in preliminary patient trials and demonstrated the potential for effective rehabilitation therapy with automated assistance."
+                     data-conference="Centro de Automática y Robótica (CAR-CSIC)"
+                     data-achievement="3-Month Research Internship">
+                    <img src="resources/FES.png" alt="Research Internship" class="project-image">
+                    <div class="p-6">
+                        <div class="flex flex-wrap mb-3">
+                            <span class="tag software">Software Dev</span>
+                            <span class="tag medical-ai">Medical AI</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">
+                            FES Rehabilitation Platform
+                        </h3>
+                        <p class="text-gray-600 mb-4 text-sm">
+                            Research contribution to robotic rehabilitation platform with functional 
+                            electrical stimulation for patient therapy.
+                        </D>
+                        <div class="achievement-badge">
+                            🔬 3-Month Research Internship
+                        </div>
+                        <div class="text-sm text-gray-500 mt-3">
+                            CAR-CSIC • Research & Development
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+        </div>
+    </section>
+
+    <div id="project-modal" class="modal">
+        <div class="modal-content max-w-4xl w-full">
+            <button class="modal-close">&times;</button>
+            <div class="p-8">
+                <img src="" alt="" class="modal-image w-full h-64 object-cover rounded-lg mb-6">
+                <h2 class="modal-title font-display text-3xl font-bold text-gray-800 mb-4"></h2>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Project Description</h3>
+                        <p class="modal-description text-gray-600 leading-relaxed mb-6"></p>
+                        
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Methodology</h3>
+                        <p class="modal-methodology text-gray-600 leading-relaxed mb-6"></p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Results & Impact</h3>
+                        <p class="modal-results text-gray-600 leading-relaxed mb-6"></p>
+                        
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-800 mb-2">Conference</h4>
+                            <p class="modal-conference text-gray-600 mb-3"></p>
+                            
+                            <h4 class="font-semibold text-gray-800 mb-2">Achievement</h4>
+                            <p class="modal-achievement text-gray-600"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-4xl mx-auto fade-in">
+                <h2 class="font-display text-3xl font-bold mb-6">
+                    Interested in My Research?
+                </h2>
+                <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                    I'm always open to discussing collaboration opportunities, sharing insights, 
+                    or exploring new research directions in AI and medical imaging.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="contact.html" class="bg-gradient-to-r from-yellow-600 to-yellow-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-yellow-500 hover:to-yellow-400 transition-all">
+                        Collaborate With Me
+                    </a>
+                    <a href="about.html" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-800 transition-all">
+                        Learn More About Me
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <div class="font-display text-2xl font-semibold mb-4">
+                    Miguel Díaz Benito
+                </div>
+                <div class="text-gray-400 mb-6">
+                    AI Researcher • Biomedical Engineer • Erasmus Mundus Scholar
+                </div>
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="https://linkedin.com/in/miguel-díaz-benito" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <a href="mailto:migueldiazbenito095@gmail.com" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="border-t border-gray-800 pt-8">
+                    <p class="text-gray-400 text-sm">
+                        © 2025 Miguel Díaz Benito. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

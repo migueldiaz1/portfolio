@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miguel Díaz Benito - AI Researcher & Biomedical Engineer </title>
+    <meta name="description" content="Professional portfolio of Miguel Díaz Benito, Erasmus Mundus Scholar specializing in AI for medical imaging and computer vision.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-navy: #1a2332;
+            --secondary-copper: #c17817;
+            --accent-sage: #7c9885;
+            --bg-light: #fafafa;
+            --text-dark: #2d3748;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, #2a3441 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .neural-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .achievement-badge {
+            background: linear-gradient(135deg, var(--secondary-copper), #d4941f);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(193, 120, 23, 0.3);
+        }
+        
+        .timeline-container {
+            position: relative;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--secondary-copper), var(--accent-sage));
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            opacity: 0;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: 55%;
+            text-align: right;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 55%;
+            text-align: left;
+        }
+        
+        .timeline-node {
+            position: absolute;
+            left: 50%;
+            top: 1rem;
+            width: 1rem;
+            height: 1rem;
+            background: var(--secondary-copper);
+            border: 3px solid white;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 3;
+        }
+        
+        .timeline-node:hover {
+            transform: translateX(-50%) scale(1.2);
+            box-shadow: 0 4px 12px rgba(193, 120, 23, 0.4);
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+        
+        .timeline-details {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* --- ESTILO DE PROYECTOS CV --- */
+        .project-card-cv {
+            position: relative;
+            display: block;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card-cv img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            filter: grayscale(80%) blur(2px);
+            transition: filter 0.3s ease-out;
+        }
+
+        .project-card-cv .cv-label-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+            padding: 1rem;
+            transform: translateY(100%);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            color: var(--text-dark);
+        }
+        
+        .project-card-cv .tag {
+            background: #e0f2fe;
+            color: #0c4a6e;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        .project-card-cv .tag.medical-ai {
+            background: #dbeafe; color: #1e40af;
+        }
+        .project-card-cv .tag.computer-vision {
+            background: #dcfce7; color: #166534;
+        }
+        .project-card-cv .tag.software {
+            background: #e0f2fe; color: #0c4a6e;
+        }
+
+
+        .project-card-cv .cv-bounding-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0%;
+            height: 0%;
+            border: 3px solid var(--secondary-copper);
+            box-sizing: border-box;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: all 0.4s ease-in-out;
+            border-radius: 0.75rem; /* Esquinas curvadas */
+        }
+
+        .project-card-cv .cv-detection-label {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--secondary-copper);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            transition-delay: 0.2s;
+        }
+
+        .project-card-cv:hover img {
+            filter: grayscale(0%) blur(0px);
+        }
+
+        .project-card-cv:hover .cv-bounding-box {
+            width: 100%;
+            height: 100%;
+            opacity: 1;
+        }
+
+        .project-card-cv:hover .cv-label-info {
+            transform: translateY(0%);
+            opacity: 1;
+        }
+
+        .project-card-cv:hover .cv-detection-label {
+            opacity: 1;
+        }
+
+        .project-card-cv:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* --- ESTILO: CARRUSEL DE PROYECTOS "GAZE" --- */
+        .project-carousel-wrapper {
+            position: relative;
+            cursor: ew-resize;
+        }
+
+        .project-carousel-container {
+            overflow-x: hidden;
+            scroll-behavior: auto;
+            scrollbar-width: none;
+        }
+        
+        .project-carousel-container::-webkit-scrollbar { display: none; }
+
+        .project-carousel-track {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 2rem;
+            padding-bottom: 1rem;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .project-carousel-track .project-card-cv {
+            flex-shrink: 0;
+        }
+        
+        .project-scroll-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: var(--text-dark);
+            border: 1px solid #e2e8f0;
+            border-radius: 50%;
+            width: 2.5rem; /* 40px */
+            height: 2.5rem; /* 40px */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+            opacity: 0.7;
+        }
+        .project-scroll-btn:hover {
+            background-color: white;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+            transform: translateY(-50%) scale(1.05);
+            opacity: 1;
+        }
+        .project-scroll-btn.left-0 { left: -1.25rem; }
+        .project-scroll-btn.right-0 { right: -1.25rem; }
+        
+        @media (max-width: 768px) {
+            .project-scroll-btn {
+                display: none;
+            }
+            .project-carousel-container {
+                overflow-x: auto;
+                scroll-behavior: smooth;
+            }
+            .project-carousel-wrapper {
+                cursor: default;
+            }
+        }
+
+        /* --- INICIO DE CAMBIOS: CSS DE PUBLICACIONES --- */
+
+        /* Estilos antiguos .publication-card eliminados */
+
+        /* --- ESTILO: CARRUSEL DE PUBLICACIONES "GAZE" --- */
+        .publication-carousel-wrapper {
+            position: relative;
+            cursor: ew-resize;
+            max-width: 140rem; /* max-w-2xl para centrarlo */
+            max-width: 140rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .publication-carousel-container {
+            overflow-x: hidden;
+            scroll-behavior: auto;
+            scrollbar-width: none;
+        }
+        
+        .publication-carousel-container::-webkit-scrollbar { display: none; }
+
+        .publication-carousel-track {
+            display: flex;
+            flex-wrap: nowrap;
+            /* Centrar si hay pocos libros */
+            justify-content: center; 
+            gap: 20rem;
+            padding-bottom: 1rem;
+            padding-top: 1rem;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        
+        .publication-scroll-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: var(--text-dark);
+            border: 1px solid #e2e8f0;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+            opacity: 0.7;
+        }
+        .publication-scroll-btn:hover {
+            background-color: white;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+            transform: translateY(-50%) scale(1.05);
+            opacity: 1;
+        }
+        .publication-scroll-btn.left-0 { left: -1.25rem; }
+        .publication-scroll-btn.right-0 { right: -1.25rem; }
+
+        /* --- ESTILO: LIBRO DE PUBLICACIÓN --- */
+        .book-card {
+            display: block;
+            width: 280px; /* Ancho del libro */
+            height: 380px; /* Alto del libro */
+            position: relative;
+            perspective: 1500px;
+            flex-shrink: 0;
+            transition: transform 1.2s ease;
+        }
+        .book-card:hover {
+            transform: scale(1.); /* Un leve zoom al pasar el ratón */
+        }
+
+        .book-cover, .book-paper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .book-cover {
+            /* Portada */
+            background-color: var(--primary-navy);
+            color: white;
+            border-radius: 4px 8px 8px 4px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(255,255,255,0.1);
+            z-index: 10;
+            transform-origin: left center;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        /* Lomo del libro */
+        .book-cover::before {
+            content: '';
+            position: absolute;
+            top: 2px; /* Pequeño ajuste */
+            left: 0;
+            width: 20px;
+            height: calc(100% - 4px);
+            background: linear-gradient(to right, #111a28 0%, var(--primary-navy) 100%);
+            transform: rotateY(0deg) translateX(-100%);
+            transform-origin: left center;
+            border-radius: 4px 0 0 4px;
+            box-shadow: inset -2px 0 4px rgba(0,0,0,0.2);
+        }
+        
+        .book-cover .book-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: bold;
+        }
+        .book-cover .book-conference {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .book-paper {
+            /* Hoja informativa interior */
+            background: white;
+            z-index: 5;
+            border-radius: 4px 8px 8px 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 1.5rem;
+            color: var(--text-dark);
+            transform: rotateY(0deg) translateZ(-2px); /* Oculto detrás */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .book-paper h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+        .book-paper h4 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--secondary-copper);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+        }
+        .book-paper p {
+            font-size: 0.8rem;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+        .book-paper .badge {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: auto; /* Empuja el badge al fondo */
+        }
+
+        /* --- ANIMACIÓN DE APERTURA --- */
+        .book-card:hover .book-cover {
+            transform: rotateY(-135deg) translateZ(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .book-card:hover .book-paper {
+            transform: rotateY(0deg) translateZ(0px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        /* Ocultar flechas y 'gaze' en móvil para publicaciones */
+        @media (max-width: 768px) {
+            .publication-scroll-btn {
+                display: none;
+            }
+            .publication-carousel-container {
+                overflow-x: auto;
+                scroll-behavior: smooth;
+            }
+            .publication-carousel-wrapper {
+                cursor: default;
+            }
+            .publication-carousel-track {
+                justify-content: flex-start; /* Alinear a la izquierda en móvil */
+            }
+        }
+        
+        /* --- FIN DE CAMBIOS CSS --- */
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary-copper), #d4941f);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(193, 120, 23, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(193, 120, 23, 0.4);
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background: rgba(26, 35, 50, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .fade-in {
+            opacity: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                margin: 0 0 0 2rem;
+                text-align: left;
+            }
+            
+            .timeline-line {
+                left: 1rem;
+            }
+            
+            .timeline-node {
+                left: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="text-white font-display font-semibold text-xl">
+                Miguel Díaz Benito
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="text-white hover:text-yellow-300 transition-colors">Home</a>
+                <a href="about.html" class="text-white hover:text-yellow-300 transition-colors">About</a>
+                <a href="publications.html" class="text-white hover:text-yellow-300 transition-colors">Publications</a>
+                <a href="projects.html" class="text-white hover:text-yellow-300 transition-colors">Projects</a>
+                <a href="contact.html" class="text-white hover:text-yellow-300 transition-colors">Contact</a>
+            </div>
+            <button class="md:hidden text-white" onclick="toggleMobileMenu()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <section id="home" class="hero-bg pt-32 pb-20">
+        <canvas id="neural-canvas" class="neural-canvas"></canvas>
+        <div class="hero-content container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <div class="mb-6">
+                        <h1 class="hero-title font-display text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                            AI Researcher by passion, Biomedical Engineer by training
+                        </h1>
+                        <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                            Welcome to my portfolio. Here, you'll discover my work in deep learning applied to medicine, from publications at MICCAI to computer vision projects. I am currently pursuing my Erasmus Mundus Master's degree.
+                        </p>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-4 mb-8">
+                        <div class="achievement-badge">
+                            🎓 EMJM Full Scholarship
+                        </div>
+                        <div class="achievement-badge">
+                            🏆 2 Conference papers with Awards 
+                        </div>
+                        <div class="achievement-badge">
+                            🌍 International Profile
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <a href="publications.html" class="btn-primary">
+                            Explore Publications
+                        </a>
+                        <a href="contact.html" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-800 transition-all">
+                            Collaborate
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="relative">
+                        <img src="resources/hero-portrait.jpg" alt="Miguel Díaz Benito" 
+                             class="w-full max-w-md mx-auto rounded-2xl shadow-2xl">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="font-display text-4xl font-bold text-gray-800 mb-4">
+                    Academic Journey
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    From biomedical engineering to cutting-edge AI research, exploring the intersection 
+                    of artificial intelligence and medicine across international institutions.
+                </p>
+            </div>
+            
+            <div class="timeline-container max-w-6xl mx-auto">
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-item" data-year="2024-2026">
+                    <div class="timeline-node"></div>
+                    <div class="timeline-content">
+                        <div class="text-sm text-gray-500 mb-2">2024 - Present</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">
+                            <a href="master-ipcv-ai.html" class="hover:text-blue-600 transition-colors duration-200" title="Click to see master's details">
+                                Erasmus Mundus Master's - IPCV-AI
+                            </a>
+                        </h3>
+                        <div class="mt-4 grid grid-cols-[auto,1fr] gap-x-3 gap-y-3 items-center">
+                            <img src="resources/logo-pazmany.png" alt="Pázmány Péter Logo" class="h-10 w-10 object-contain justify-self-center">
+                            <div>
+                                <div class="font-semibold text-gray-700">Pázmány Péter Katolikus</div>
+                                <div class="text-sm text-gray-500">Budapest, Hungary</div>
+                            </div>
+                            <img src="resources/logo-uam.png" alt="UAM Logo" class="h-10 w-10 object-contain justify-self-center">
+                            <div>
+                                <div class="font-semibold text-gray-700">Universidad Autónoma de Madrid</div>
+                                <div class="text-sm text-gray-500">Madrid, Spain</div>
+                            </div>
+                            <img src="resources/logo-bordeaux.png" alt="Bordeaux Logo" class="h-10 w-10 object-contain justify-self-center">
+                            <div>
+                                <div class="font-semibold text-gray-700">Université de Bordeaux</div>
+                                <div class="text-sm text-gray-500">Bordeaux, France</div>
+                            </div>
+                        </div>
+                        <div class="text-sm text-gray-500 mt-4"> Full scholarship • GPA: 4.8/5 (Budapest) • 8.7/10 (Madrid) </div>
+                        <div class="timeline-details">
+                            <h4 class="font-semibold mb-2">Key Achievements:</h4>
+                            <ul class="space-y-1 text-sm text-gray-600">
+                                <li>• 2 papers accepted at MICCAI 2025 and ICIP 2025</li>
+                                <li>• 2nd place at MICCAI SynthRAD 2025 Challenge</li>
+                                <li>• 2nd place at ICIP 2025 Grand Challenge</li>
+                                <li>• Best Student Paper Award - Honorable Mention</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-year="2020-2024">
+                    <div class="timeline-node"></div>
+                    <div class="timeline-content">
+                        <div class="text-sm text-gray-500 mb-2">2020 - 2024</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">
+                            BSc in Biomedical Engineering
+                        </h3>
+                        <div class="flex items-start mb-3"> 
+                            <div> 
+                                <div class="font-semibold text-gray-700">Universidad Autónoma de Madrid</div>
+                                <div class="text-sm text-gray-500">Madrid, Spain</div>
+                                <div class="text-sm text-gray-500 mt-2">
+                                    GPA: 8.1/10 • Distinctions in multiple subjects
+                                </div>
+                            </div>
+                            <img src="resources/logo-uam.png" alt="UAM Logo" class="h-10 ml-4 rounded-sm flex-shrink-0">
+                        </div>
+                        <div class="timeline-details">
+                            <h4 class="font-semibold mb-2">Notable Projects:</h4>
+                            <ul class="space-y-1 text-sm text-gray-600">
+                                <li>• Bachelor thesis: "Detection and Segmentation of Brain Tumours with YOLOv8" (9.5/10)</li>
+                                <li>• Research internship at CAR-CSIC</li>
+                                <li>• Hospital internships at HULP and FJD</li>
+                                <li>• Class representative for student body</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-year="2022-2023">
+                    <div class="timeline-node"></div>
+                    <div class="timeline-content">
+                        <div class="text-sm text-gray-500 mb-2">2022 - 2023</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">
+                            Erasmus Exchange - Sorbonne Université
+                        </h3>
+                        <div class="flex items-center mb-3"> 
+                            <img src="resources/logo-sorbonne.png" alt="Sorbonne Université Logo" class="h-10 mr-4 rounded-sm flex-shrink-0">
+                            <div> 
+                                <div class="font-semibold text-gray-700">Sorbonne Université</div>
+                                <div class="text-sm text-gray-500">Paris, France</div>
+                                <div class="text-sm text-gray-500 mt-2">
+                                    Double Degree in Computer Science and Electronics
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-details">
+                            <h4 class="font-semibold mb-2">International Experience:</h4>
+                            <ul class="space-y-1 text-sm text-gray-600">
+                                <li>• Advanced coursework in computer science and electronics</li>
+                                <li>• Cultural immersion in French academic environment</li>
+                                <li>• Language proficiency development</li>
+                                <li>• Foundation for international research collaboration</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="font-display text-4xl font-bold text-gray-800 mb-4">
+                    Recent Publications
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    My latest peer-reviewed contributions. Hover over a book to open it and see the details.
+                </p>
+            </div>
+            
+            <div id="publication-carousel-wrapper" class="publication-carousel-wrapper">
+                
+                <button id="publication-scroll-left" class="publication-scroll-btn left-0">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                
+                <div id="publication-carousel" class="publication-carousel-container">
+                    <div id="publication-carousel-track" class="publication-carousel-track">
+                        
+                        <a href="publication-mirage.html" class="book-card fade-in">
+                            <div class="book-paper">
+                                <h4>MICCAI 2025</h4>
+                                <h3>MIRAGE: Multimodal Medical Education System</h3>
+                                <p><strong>Authors:</strong> M. Díaz Benito, C. D. Albelda, Á. García Martín, et al.</p>
+                                <span class="badge">🏆 Best Student Paper - Honorable Mention</span>
+                            </div>
+                            <div class="book-cover">
+                                <span class="book-conference">MICCAI 2025</span>
+                                <span class="book-title">MIRAGE</span>
+                            </div>
+                        </a>
+                        
+                        <a href="publication-urban-reid.html" class="book-card fade-in">
+                            <div class="book-paper">
+                                <h4>ICIP 2025</h4>
+                                <h3>Data-Centric Enhancements for Urban Object Re-Identification</h3>
+                                <p><strong>Authors:</strong> M. Díaz Benito, J. Sequeiro González</p>
+                                <span class="badge">🥇 1st Place (Public) • 🥈 2nd Place (Private)</span>
+                            </div>
+                            <div class="book-cover" style="background-color: var(--accent-sage);">
+                                <span class="book-conference">ICIP 2025</span>
+                                <span class="book-title">Urban Re-ID</span>
+                            </div>
+                        </a>
+                        
+                        </div>
+                </div>
+                
+                <button id="publication-scroll-right" class="publication-scroll-btn right-0">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+            
+            <div class="text-center mt-12 fade-in">
+                <a href="publications.html" class="btn-primary">
+                    View All Publications
+                </a>
+            </div>
+        </div>
+    </section>
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="font-display text-4xl font-bold text-gray-800 mb-4">
+                    Recent Projects
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    A look at my hands-on experience in software development and applied AI research.
+                </p>
+            </div>
+            
+            <div id="project-carousel-wrapper" class="project-carousel-wrapper max-w-7xl mx-auto">
+                
+                <button id="project-scroll-left" class="project-scroll-btn left-0">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                
+                <div id="project-carousel" class="project-carousel-container">
+                    <div class="project-carousel-track">
+                    
+                        <a href="projects.html" class="project-card-cv fade-in w-full md:w-1/3">
+                            <div class="cv-detection-label">Project detected: Prob = 0.99</div>
+                            <img src="resources/project-1.jpg" alt="MIRAGE Project">
+                            <div class="cv-label-info">
+                                <h3 class="text-lg font-bold text-gray-800">MIRAGE: Multimodal Medical Education System</h3>
+                                <p class="text-sm text-gray-600">AI-powered system for medical education combining image retrieval and generation.</p>
+                                <span class="tag medical-ai">Medical AI</span>
+                            </div>
+                            <div class="cv-bounding-box"></div>
+                        </a>
+                        
+                        <a href="projects.html" class="project-card-cv fade-in w-full md:w-1/3">
+                            <div class="cv-detection-label">Project detected: Prob = 0.99</div>
+                            <img src="resources/project-2.jpg" alt="SynthRAD Challenge">
+                            <div class="cv-label-info">
+                                <h3 class="text-lg font-bold text-gray-800">SynthRAD Challenge - MRI-to-CT Synthesis</h3>
+                                <p class="text-sm text-gray-600">Advanced nnU-Net solution for cross-anatomy CT synthesis.</p>
+                                <span class="tag medical-ai">Medical AI</span>
+                            </div>
+                            <div class="cv-bounding-box"></div>
+                        </a>
+
+                        <a href="projects.html" class="project-card-cv fade-in w-full md:w-1/3">
+                            <div class="cv-detection-label">Project detected: Prob = 0.99</div>
+                            <img src="resources/project-3.jpg" alt="Urban Re-ID">
+                            <div class="cv-label-info">
+                                <h3 class="text-lg font-bold text-gray-800">Urban Object Re-Identification Challenge</h3>
+                                <p class="text-sm text-gray-600">Advanced computer vision solution for urban object identification.</p>
+                                <span class="tag computer-vision">Computer Vision</span>
+                            </div>
+                            <div class="cv-bounding-box"></div>
+                        </a>
+                        
+                        <a href="projects.html" class="project-card-cv fade-in w-full md:w-1/3">
+                            <div class="cv-detection-label">Project detected: Prob = 0.99</div>
+                            <img src="resources/project-4.jpg" alt="Brain Tumor Detection">
+                            <div class="cv-label-info">
+                                <h3 class="text-lg font-bold text-gray-800">Brain Tumor Detection with YOLOv8</h3>
+                                <p class="text-sm text-gray-600">Advanced YOLOv8 implementation for precise brain tumor detection.</p>
+                                <span class="tag medical-ai">Medical AI</span>
+                            </div>
+                            <div class="cv-bounding-box"></div>
+                        </a>
+                        
+                        <a href="projects.html" class="project-card-cv fade-in w-full md:w-1/3">
+                            <div class="cv-detection-label">Project detected: Prob = 0.99</div>
+                            <img src="resources/FES.png" alt="Research Internship">
+                            <div class="cv-label-info">
+                                <h3 class="text-lg font-bold text-gray-800">FES Rehabilitation Platform</h3>
+                                <p class="text-sm text-gray-600">Research contribution to robotic rehabilitation platform with FES.</p>
+                                <span class="tag software">Software Dev</span>
+                            </div>
+                            <div class="cv-bounding-box"></div>
+                        </a>
+
+                    </div>
+                </div>
+                
+                <button id="project-scroll-right" class="project-scroll-btn right-0">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+
+            </div>
+            
+            <div class="text-center mt-12 fade-in">
+                <a href="projects.html" class="btn-primary">
+                    View All Projects
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-gradient-to-r from-gray-800 to-gray-900 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-4xl mx-auto fade-in">
+                <h2 class="font-display text-4xl font-bold mb-6">
+                    Ready to Collaborate?
+                </h2>
+                <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                    I'm always interested in new research opportunities, potential collaborations, 
+                    or innovative projects at the intersection of AI and medicine. Let's connect and 
+                    explore how we can advance the field together.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="contact.html" class="btn-primary">
+                        Get In Touch
+                    </a>
+                    <a href="about.html" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-800 transition-all">
+                        Learn More About Me
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <div class="font-display text-2xl font-semibold mb-4">
+                    Miguel Díaz Benito
+                </div>
+                <div class="text-gray-400 mb-6">
+                    AI Researcher • Biomedical Engineer • Erasmus Mundus Scholar
+                </div>
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="https://linkedin.com/in/miguel-díaz-benito" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <a href="mailto:migueldiazbenito095@gmail.com" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="border-t border-gray-800 pt-8">
+                    <p class="text-gray-400 text-sm">
+                        © 2025 Miguel Díaz Benito. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- LÓGICA PARA CARRUSEL DE PROYECTOS ---
+            const projectWrapper = document.getElementById('project-carousel-wrapper');
+            const projectCarousel = document.getElementById('project-carousel');
+            const projectLeftBtn = document.getElementById('project-scroll-left');
+            const projectRightBtn = document.getElementById('project-scroll-right');
+            let projectAnimationFrameId = null;
+
+            if (projectCarousel && projectLeftBtn && projectRightBtn) {
+                
+                function checkProjectArrows() {
+                    if (window.innerWidth <= 768) {
+                        projectLeftBtn.style.display = 'none';
+                        projectRightBtn.style.display = 'none';
+                        return;
+                    }
+                    const scrollLeft = Math.ceil(projectCarousel.scrollLeft);
+                    const maxScrollLeft = projectCarousel.scrollWidth - projectCarousel.clientWidth;
+                    projectLeftBtn.style.display = (scrollLeft <= 0) ? 'none' : 'flex';
+                    projectRightBtn.style.display = (scrollLeft >= maxScrollLeft - 1) ? 'none' : 'flex';
+                }
+
+                projectRightBtn.addEventListener('click', function() {
+                    projectCarousel.scrollBy({ left: projectCarousel.clientWidth * 0.8, behavior: 'smooth' });
+                });
+
+                projectLeftBtn.addEventListener('click', function() {
+                    projectCarousel.scrollBy({ left: -projectCarousel.clientWidth * 0.8, behavior: 'smooth' });
+                });
+
+                projectCarousel.addEventListener('scroll', checkProjectArrows);
+                window.addEventListener('resize', checkProjectArrows);
+                checkProjectArrows(); // Comprobar al inicio
+            }
+
+            if (projectWrapper && projectCarousel && window.innerWidth > 768) {
+                let projectScrollSpeed = 0;
+                function projectScrollLoop() {
+                    if (projectScrollSpeed !== 0) {
+                        projectCarousel.scrollLeft += projectScrollSpeed;
+                        checkProjectArrows();
+                    }
+                    projectAnimationFrameId = requestAnimationFrame(projectScrollLoop);
+                }
+
+                projectWrapper.addEventListener('mousemove', function(e) {
+                    if (window.innerWidth <= 768) { projectScrollSpeed = 0; return; }
+                    const rect = projectWrapper.getBoundingClientRect();
+                    const mouseX = e.clientX - rect.left;
+                    const width = projectWrapper.clientWidth;
+                    const leftZone = width * 0.20;
+                    const rightZone = width * 0.80;
+
+                    if (mouseX < leftZone) {
+                        projectScrollSpeed = -1 * (1 - mouseX / leftZone) * 8;
+                    } else if (mouseX > rightZone) {
+                        projectScrollSpeed = (mouseX - rightZone) / (width - rightZone) * 8;
+                    } else {
+                        projectScrollSpeed = 0;
+                    }
+                });
+                projectWrapper.addEventListener('mouseleave', () => { projectScrollSpeed = 0; });
+                projectScrollLoop();
+            }
+
+            // --- LÓGICA PARA CARRUSEL DE PUBLICACIONES ---
+            const pubWrapper = document.getElementById('publication-carousel-wrapper');
+            const pubCarousel = document.getElementById('publication-carousel');
+            const pubLeftBtn = document.getElementById('publication-scroll-left');
+            const pubRightBtn = document.getElementById('publication-scroll-right');
+            let pubAnimationFrameId = null;
+
+            if (pubCarousel && pubLeftBtn && pubRightBtn) {
+                
+                function checkPubArrows() {
+                    if (window.innerWidth <= 768) {
+                        pubLeftBtn.style.display = 'none';
+                        pubRightBtn.style.display = 'none';
+                        return;
+                    }
+                    const scrollLeft = Math.ceil(pubCarousel.scrollLeft);
+                    const maxScrollLeft = pubCarousel.scrollWidth - pubCarousel.clientWidth;
+                    pubLeftBtn.style.display = (scrollLeft <= 0) ? 'none' : 'flex';
+                    pubRightBtn.style.display = (scrollLeft >= maxScrollLeft - 1) ? 'none' : 'flex';
+                }
+
+                pubRightBtn.addEventListener('click', function() {
+                    pubCarousel.scrollBy({ left: pubCarousel.clientWidth * 0.8, behavior: 'smooth' });
+                });
+
+                pubLeftBtn.addEventListener('click', function() {
+                    pubCarousel.scrollBy({ left: -pubCarousel.clientWidth * 0.8, behavior: 'smooth' });
+                });
+
+                pubCarousel.addEventListener('scroll', checkPubArrows);
+                window.addEventListener('resize', checkPubArrows);
+                checkPubArrows();
+            }
+
+            if (pubWrapper && pubCarousel && window.innerWidth > 768) {
+                let pubScrollSpeed = 0;
+                function pubScrollLoop() {
+                    if (pubScrollSpeed !== 0) {
+                        pubCarousel.scrollLeft += pubScrollSpeed;
+                        checkPubArrows();
+                    }
+                    pubAnimationFrameId = requestAnimationFrame(pubScrollLoop);
+                }
+
+                pubWrapper.addEventListener('mousemove', function(e) {
+                    if (window.innerWidth <= 768) { pubScrollSpeed = 0; return; }
+                    const rect = pubWrapper.getBoundingClientRect();
+                    const mouseX = e.clientX - rect.left;
+                    const width = pubWrapper.clientWidth;
+                    const leftZone = width * 0.20;
+                    const rightZone = width * 0.80;
+
+                    if (mouseX < leftZone) {
+                        pubScrollSpeed = -1 * (1 - mouseX / leftZone) * 8;
+                    } else if (mouseX > rightZone) {
+                        pubScrollSpeed = (mouseX - rightZone) / (width - rightZone) * 8;
+                    } else {
+                        pubScrollSpeed = 0;
+                    }
+                });
+                pubWrapper.addEventListener('mouseleave', () => { pubScrollSpeed = 0; });
+                pubScrollLoop();
+            }
+            
+            // Limpiar ambos loops de animación al salir
+            window.addEventListener('beforeunload', () => {
+                if (projectAnimationFrameId) cancelAnimationFrame(projectAnimationFrameId);
+                if (pubAnimationFrameId) cancelAnimationFrame(pubAnimationFrameId);
+            });
+
+        });
+    </script>
+    </body>
+</html>

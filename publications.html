@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publications - Miguel Díaz Benito</title>
+    <meta name="description" content="Explore Miguel Díaz Benito's research publications in AI, medical imaging, and computer vision.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    
+    <style>
+        :root {
+            --primary-navy: #1a2332;
+            --secondary-copper: #c17817;
+            --accent-sage: #7c9885;
+            --bg-light: #fafafa;
+            --text-dark: #2d3748;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background: rgba(26, 35, 50, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .fade-in {
+            opacity: 0;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+            /* CAMBIO: Quitado cursor:pointer; ya que ahora es un enlace */
+        }
+        
+        /* El 'a' (enlace) ahora es la tarjeta */
+        a.project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        a.project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+        
+        .achievement-badge {
+            background: linear-gradient(135deg, var(--secondary-copper), #d4941f);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin: 0.25rem;
+        }
+        
+        /* CAMBIO: El modal ya no es necesario en esta página */
+        
+        .tag {
+            background: #e2e8f0;
+            color: var(--text-dark);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: inline-block;
+            margin: 0.125rem;
+        }
+        
+        .tag.medical-ai {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .tag.computer-vision {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .tag.deep-learning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .tag.publications {
+            background: #f3e8ff;
+            color: #7c3aed;
+        }
+        
+        .competition-result {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="text-white font-display font-semibold text-xl">
+                Miguel Díaz Benito
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="text-white hover:text-yellow-300 transition-colors">Home</a>
+                <a href="about.html" class="text-white hover:text-yellow-300 transition-colors">About</a>
+                <a href="publications.html" class="text-white hover:text-yellow-300 transition-colors">Publications</a>
+                <a href="projects.html" class="text-white hover:text-yellow-300 transition-colors">Projects</a>
+                <a href="contact.html" class="text-white hover:text-yellow-300 transition-colors">Contact</a>
+            </div>
+            <button class="md:hidden text-white" onclick="toggleMobileMenu()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <section class="pt-24 pb-16 bg-gradient-to-br from-gray-50 to-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="fade-in">
+                    <h1 class="font-display text-5xl font-bold text-gray-800 mb-6">
+                        Publications
+                    </h1>
+                    <p class="text-xl text-gray-600 leading-relaxed mb-8">
+                        My peer-reviewed contributions to international conferences in AI and medical imaging.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                
+                <a href="publication-mirage.html" class="project-card fade-in">
+                    <img src="resources/project-1.jpg" alt="MIRAGE Project" class="project-image">
+                    <div class="p-6">
+                        <div class="flex flex-wrap mb-3">
+                            <span class="tag medical-ai">Medical AI</span>
+                            <span class="tag publications">Publication</span>
+                            <span class="tag deep-learning">Deep Learning</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">
+                            MIRAGE: Multimodal Medical Education System
+                        </h3>
+                        <p class="text-gray-600 mb-4 text-sm">
+                            AI-powered system for medical education combining image retrieval and generation 
+                            with educational content enhancement.
+                        </p>
+                        <div class="achievement-badge">
+                            🏆 Best Student Paper - Honorable Mention
+                        </div>
+                        <div class="text-sm text-gray-500 mt-3">
+                            MICCAI 2025 • AMAI Workshop
+                        </div>
+                    </div>
+                </a>
+
+                <a href="publication-urban-reid.html" class="project-card fade-in">
+                    <img src="resources/project-3.jpg" alt="Urban Re-ID" class="project-image">
+                    <div class="p-6">
+                        <div class="flex flex-wrap mb-3">
+                            <span class="tag computer-vision">Computer Vision</span>
+                            <span class="tag deep-learning">Deep Learning</span>
+                            <span class="tag publications">Publication</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">
+                            Urban Object Re-Identification Challenge
+                        </h3>
+                        <p class="text-gray-600 mb-4 text-sm">
+                            Advanced computer vision solution for urban object identification across 
+                            multiple camera views with superior performance.
+                        </p>
+                        <div class="competition-result">
+                            🥇 1st (Public) • 🥈 2nd (Private)
+                        </div>
+                        <div class="text-sm text-gray-500 mt-3">
+                            ICIP 2025 • Grand Challenge
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-4xl mx-auto fade-in">
+                <h2 class="font-display text-3xl font-bold mb-6">
+                    Interested in My Other Projects?
+                </h2>
+                <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                    Beyond these publications, I have worked on applied software development and 
+                    other computer vision challenges.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="projects.html" class="btn-primary">
+                        View All Projects
+                    </a>
+                    <a href="contact.html" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-800 transition-all">
+                        Get In Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <div class="font-display text-2xl font-semibold mb-4">
+                    Miguel Díaz Benito
+                </div>
+                <div class="text-gray-400 mb-6">
+                    AI Researcher • Biomedical Engineer • Erasmus Mundus Scholar
+                </div>
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="https://linkedin.com/in/miguel-díaz-benito" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <a href="mailto:migueldiazbenito095@gmail.com" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="border-t border-gray-800 pt-8">
+                    <p class="text-gray-400 text-sm">
+                        © 2025 Miguel Díaz Benito. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

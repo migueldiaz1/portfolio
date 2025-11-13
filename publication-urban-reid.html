@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: Urban Object Re-ID - Miguel Díaz Benito</title>
+    <meta name="description" content="Details of the 1st place solution for the ICIP 2025 Grand Challenge on Urban Object Re-Identification.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-navy: #1a2332;
+            --secondary-copper: #c17817;
+            --accent-sage: #7c9885;
+            --bg-light: #fafafa;
+            --text-dark: #2d3748;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background: rgba(26, 35, 50, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .fade-in {
+            opacity: 0;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary-copper), #d4941f);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(193, 120, 23, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(193, 120, 23, 0.4);
+        }
+        
+        .achievement-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--secondary-copper);
+            transition: all 0.3s ease;
+            opacity: 0; /* Para animación */
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .tag {
+            background: #e2e8f0;
+            color: var(--text-dark);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: inline-block;
+            margin: 0.125rem;
+        }
+
+        .tag.computer-vision {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .tag.deep-learning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .competition-result {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="text-white font-display font-semibold text-xl">
+                Miguel Díaz Benito
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="text-white hover:text-yellow-300 transition-colors">Home</a>
+                <a href="about.html" class="text-white hover:text-yellow-300 transition-colors">About</a>
+                <a href="publications.html" class="text-white hover:text-yellow-300 transition-colors">Publications</a>
+                <a href="projects.html" class="text-white hover:text-yellow-300 transition-colors">Projects</a>
+                <a href="contact.html" class="text-white hover:text-yellow-300 transition-colors">Contact</a>
+            </div>
+            <button class="md:hidden text-white" onclick="toggleMobileMenu()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <section class="pt-24 pb-16 bg-gradient-to-br from-gray-50 to-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="fade-in">
+                    <h1 class="font-display text-5xl font-bold text-gray-800 mb-6">
+                        Urban Object Re-Identification
+                    </h1>
+                    <p class="text-xl text-gray-600 leading-relaxed mb-8">
+                        Our <strong>1st Place</strong> winning solution (on the private leaderboard) for the <strong>ICIP 2025 Grand Challenge</strong>, 
+                        based on data-centric and model-centric enhancements.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid lg:grid-cols-3 gap-8">
+                    
+                    <div class="lg:col-span-2">
+                        <div class="fade-in mb-12">
+                            <h2 class="font-display text-3xl font-bold text-gray-800 mb-6">
+                                Project Summary
+                            </h2>
+                            <p class="text-gray-600 leading-relaxed mb-6">
+                                In this study, we proposed an enhanced urban object re-identification (ReID) pipeline based on the 'Bag-of-Tricks' (BoT) framework. We introduced a variety of contributions at different levels, including dataset-level enhancements (super-resolution, style transfer, and data augmentation) and architectural enhancements to the BoT baseline.
+                            </p>
+                        </div>
+
+                        <div class="fade-in mb-12">
+                            <h2 class="font-display text-3xl font-bold text-gray-800 mb-6">
+                                The Challenge
+                            </h2>
+                            <p class="text-gray-600 leading-relaxed mb-6">
+                                Urban object ReID (like containers or bins) is a particularly difficult problem. Unlike person ReID, it presents unique challenges:
+                            </p>
+                            <ul class="list-disc list-inside text-gray-600 space-y-2 mb-6">
+                                <li><strong>Low inter-class variability:</strong> Many objects are visually identical due to shared manufacturers.</li>
+                                <li><strong>High intra-class variability:</strong> The same object can look drastically different due to weather, lighting, vandalism, or viewpoint changes.</li>
+                            </ul>
+                        </div>
+
+                        <div class="fade-in mb-12">
+                            <h2 class="font-display text-3xl font-bold text-gray-800 mb-6">
+                                Our Solution
+                            </h2>
+                            <p class="text-gray-600 leading-relaxed mb-6">
+                                Our strategy combined data-centric and model-centric enhancements to create a robust pipeline.
+                            </p>
+                            
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">1. Data-Centric Enhancements</h3>
+                            <ul class="list-disc list-inside text-gray-600 space-y-2 mb-4">
+                                <li><strong>Super-Resolution (Real-ESRGAN):</strong> We used a GAN model to upscale low-resolution images to a high-quality, distortion-free input size.</li>
+                                <li><strong>Style Transfer (U-Net):</strong> We created a hybrid dataset combining the high-frequency details from super-resolved images with the natural textures of the original domain.</li>
+                                <li><strong>Data Augmentation:</strong> We applied perspective distortion, lighting adjustments, rotations, and patch occlusions to simulate real-world conditions.</li>
+                            </ul>
+
+                            <h3 class="text-xl font-bold text-gray-800 mb-4 mt-6">2. Model-Centric Enhancements</h3>
+                            <ul class="list-disc list-inside text-gray-600 space-y-2">
+                                <li><strong>Backbone Optimization:</strong> We evaluated several architectures, finding that <strong>SE-ResNet-50</strong> significantly outperformed the baseline, achieving a +5.36 mAP improvement.</li>
+                                <li><strong>Reranking (QMV):</strong> We applied a Query Majority Voting strategy that grouped adjacent frames to improve classification consistency.</li>
+                            </ul>
+                        </div>
+
+                        <div class="fade-in mb-12">
+                            <h2 class="font-display text-3xl font-bold text-gray-800 mb-6">
+                                Data Visualization
+                            </h2>
+                            <p class="text-gray-600 leading-relaxed mb-4">
+                                A pillar of our success was transforming the input data. On the left (or top) are original images, and on the right (or bottom) are the super-resolved versions.
+                            </p>
+                            <img src="resources/reid2.jpg" alt="Super-Resolution Examples" class="w-full rounded-lg shadow-md mb-8">
+                            
+                            <p class="text-gray-600 leading-relaxed mb-4">
+                                Here, style transfer is shown: Orange (Original), Green (Style-Transferred), Blue (Super-Resolved).
+                            </p>
+                            <img src="resources/reid1.jpg" alt="Style-Transfer Examples" class="w-full rounded-lg shadow-md">
+                        </div>
+
+                    </div>
+
+                    <div class="lg:col-span-1">
+                        <div id="achievements-card" class="achievement-card">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6">Results</h3>
+                            
+                            <div class="mb-6">
+                                <h4 class="font-semibold text-gray-700 mb-2">Final Ranking</h4>
+                                <p class="text-gray-600 mb-4">
+                                    Our combined solution achieved a <strong>+11.75 mAP</strong> improvement over the baseline.
+                                </p>
+                                <div class="competition-result">
+                                    🥇 1st Place (Public Leaderboard)<br>
+                                    🥈 2nd Place (Private Leaderboard)
+                                </div>
+                            </div>
+
+                            <div class="mb-6">
+                                <h4 class="font-semibold text-gray-700 mb-2">Key Technologies</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="tag deep-learning">BoT (ResNet)</span>
+                                    <span class="tag deep-learning">SE-ResNet-50</span>
+                                    <span class="tag computer-vision">Real-ESRGAN</span>
+                                    <span class="tag computer-vision">U-Net</span>
+                                    <span class="tag">Style Transfer</span>
+                                    <span class="tag">QMV Reranking</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <h4 class="font-semibold text-gray-700 mb-2">Conference</h4>
+                                <p class="text-gray-600">ICIP 2025 Grand Challenge</p>
+                            </div>
+
+                            <div class="mb-6">
+                                <h4 class="font-semibold text-gray-700 mb-2">Authors</h4>
+                                <p class="text-gray-600">Miguel Díaz Benito, Javier Sequeiro González</p>
+                            </div>
+
+                            <a href="https://www.kaggle.com/competitions/urban-reid-challenge/overview" target="_blank" rel="noopener noreferrer" class="btn-primary w-full text-center">
+                                Visit Challenge Website
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-4xl mx-auto fade-in">
+                <h2 class="font-display text-3xl font-bold mb-6">
+                    View Next Publication
+                </h2>
+                <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                    My other featured publication focuses on multimodal AI for medical education, which won an honorable mention at MICCAI.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="publication-mirage.html" class="btn-primary">
+                        Next: MIRAGE Project
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <div class="font-display text-2xl font-semibold mb-4">
+                    Miguel Díaz Benito
+                </div>
+                <div class="text-gray-400 mb-6">
+                    AI Researcher • Biomedical Engineer • Erasmus Mundus Scholar
+                </div>
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="https://linkedin.com/in/miguel-díaz-benito" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <a href="mailto:migueldiazbenito095@gmail.com" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="border-t border-gray-800 pt-8">
+                    <p class="text-gray-400 text-sm">
+                        © 2025 Miguel Díaz Benito. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            anime({
+                targets: '#achievements-card',
+                opacity: [0, 1],
+                translateX: [100, 0],
+                duration: 800,
+                delay: 300, 
+                easing: 'easeOutQuart'
+            });
+        });
+    </script>
+</body>
+</html>
